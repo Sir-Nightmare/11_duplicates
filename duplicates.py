@@ -20,6 +20,6 @@ def are_files_duplicates(folder_path):
 
 
 if __name__ == '__main__':
-    # folder_path='C:\Users\Sir Nightmare\PycharmProjects'
+    # folder_path=sys.argv[1]
     folder_path = 'D:\groot_folder'
     are_files_duplicates(folder_path)
