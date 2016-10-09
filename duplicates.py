@@ -3,7 +3,7 @@ from tabulate import tabulate
 import sys
 
 
-def find_files_duplicates(folder_path):
+def find_file_duplicates(folder_path):
     set_of_files = set()
     list_of_duplicated_files = []
     for root_folder, sub_folders, file_names in os.walk(folder_path):
@@ -27,16 +27,16 @@ def print_list_of_duplicates(list_of_duplicated_files):
 def delete_files(list_to_delete):
     for file in list_to_delete:
         os.unlink(file[2])
-    print('All duplicated files were permanently deleted.')
 
 
 if __name__ == '__main__':
     folder_path = sys.argv[1]
-    list_of_duplicated_files = find_files_duplicates(folder_path)
+    list_of_duplicated_files = find_file_duplicates(folder_path)
     if len(list_of_duplicated_files) > 0:
         print_list_of_duplicates(list_of_duplicated_files)
         are_to_delete = input('\nDo you want do delete all duplicates permanently? (y/n)\n')
         if are_to_delete == 'y':
             delete_files(list_of_duplicated_files)
+            print('All duplicated files were permanently deleted.')
     else:
         print('There is no duplicated files.')
