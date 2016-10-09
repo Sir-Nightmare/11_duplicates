@@ -1,6 +1,6 @@
 import os
-from tabulate import tabulate
 import sys
+from tabulate import tabulate
 
 
 def find_file_duplicates(folder_path):
@@ -14,14 +14,16 @@ def find_file_duplicates(folder_path):
             if name_size_of_the_file not in set_of_files:
                 set_of_files.add(name_size_of_the_file)
             else:
-                list_of_duplicated_files.append([file_name, file_size, file_full_path])
+                list_of_duplicated_files.append([file_name,
+                                                 file_size, file_full_path])
     return list_of_duplicated_files
 
 
 def print_list_of_duplicates(list_of_duplicated_files):
-    print('The list of duplicated files:')
+    print('The list of duplicate files:')
     print(tabulate(list_of_duplicated_files,
-                   headers=['File name', 'Size in bytes', 'Full path to the file'], tablefmt="orgtbl"))
+                   headers=['File name', 'Size in bytes',
+                            'Full path to the file'], tablefmt="orgtbl"))
 
 
 def delete_files(list_to_delete):
@@ -32,11 +34,13 @@ def delete_files(list_to_delete):
 if __name__ == '__main__':
     folder_path = sys.argv[1]
     list_of_duplicated_files = find_file_duplicates(folder_path)
-    if len(list_of_duplicated_files) > 0:
+
+    if len(list_of_duplicated_files) == 0:
+        print('There is no duplicate files.')
+    else:
         print_list_of_duplicates(list_of_duplicated_files)
-        are_to_delete = input('\nDo you want do delete all duplicates permanently? (y/n)\n')
+        are_to_delete = input('\nDo you want do delete all '
+                              'duplicate files permanently? (y/n)\n')
         if are_to_delete == 'y':
             delete_files(list_of_duplicated_files)
-            print('All duplicated files were permanently deleted.')
-    else:
-        print('There is no duplicated files.')
+            print('All duplicate files were deleted permanently.')
