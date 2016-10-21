@@ -1,7 +1,7 @@
 # 11_duplicates
 
 This script finds duplicate files in folder and deletes them automatically.  
-You can also choose which files to delete manually.
+You can also choose manually which files to delete.
 
 You can run the script using following command: _python duplicates.py \<path_to_folder\> -d \<arg\>_
 
