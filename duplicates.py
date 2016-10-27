@@ -10,9 +10,8 @@ def find_all_files(folder_path):
         for file_name in file_names:
             full_path = os.path.join(root_folder, file_name)
             file_size = os.path.getsize(full_path)
-            name_size_of_the_file = '{}, size: {} bytes'.format(file_name, str(file_size))
-            date_of_creation = datetime.fromtimestamp(os.path.getctime(full_path)).isoformat(
-                sep=' ')
+            name_size_of_the_file = 'File: {}, size: {} bytes'.format(file_name, str(file_size))
+            date_of_creation = datetime.fromtimestamp(os.path.getctime(full_path)).strftime('%x %X')
             if name_size_of_the_file in all_files:
                 all_files[name_size_of_the_file].append((date_of_creation, full_path))
                 if len(all_files[name_size_of_the_file]) == 2:
@@ -22,26 +21,26 @@ def find_all_files(folder_path):
     return all_files, number_of_duplicate_groups
 
 
+def print_table_header():
+    print('{0:^4s}{1:18s}{2:40s}'.format('#', 'Date', 'Full path'))
+
+
 def print_duplicates_group(file_name, list_of_files_info):
     print(file_name)
+    print_table_header()
     num_of_piece = 1
     for piece_of_info in list_of_files_info:
-        print('{0:60s}{1:^6d}{2:30s}{3:50s}'.format(' ', num_of_piece, piece_of_info[0],
-                                                    piece_of_info[1]))
+        print('{0:^4d}{1:18s}{2:40s}'.format(num_of_piece, piece_of_info[0], piece_of_info[1]))
         num_of_piece += 1
-
-
-def print_table_header():
-    print('{0:60s}{1:^6s}{2:30s}{3:50s}'.format('File', '#', 'Date', 'Full path'))
-    print('-' * 165)
 
 
 def print_all_duplicated_files_info(all_files):
     print('\nList of duplicate files:\n')
-    print_table_header()
+    # print_table_header()
     for file_name, list_of_files_info in all_files.items():
         if len(list_of_files_info) > 1:
             print_duplicates_group(file_name, list_of_files_info)
+            print()
 
 
 def delete_duplicate_files_from_group(list_to_delete):
@@ -79,6 +78,7 @@ def manual_delete_files(all_files):
             file_to_delete_numbers = [int(i) - 1 for i in input('Input numbers of files which you '
                                                                 'want do delete. Separate numbers '
                                                                 'with a space\n').split()]
+            print()
             file_to_delete_numbers.sort()
             delete_chosed_files(list_of_files_info, file_to_delete_numbers)
 
@@ -115,4 +115,4 @@ if __name__ == '__main__':
                   'old': delete_all_duplicates_except_the_newest,
                   'p': print_all_duplicated_files_info}
         choise[del_type](all_files)
-        print('\nAll groups of duplicated files were treated')
+        print('All groups of duplicated files were treated')
